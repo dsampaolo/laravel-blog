@@ -45,7 +45,7 @@ providers' => [
 
 Customize your views in 
 ``` 
-resources/views/dsampaolo/blog
+resources/views/vendor/blog
 ``` 
 
 You can add/edit posts :

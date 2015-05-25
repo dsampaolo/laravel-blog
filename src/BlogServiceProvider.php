@@ -11,10 +11,10 @@ class BlogServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-        $this->loadViewsFrom(__DIR__.'/v iews',       'blog');
+        $this->loadViewsFrom(__DIR__.'/views', 'blog');
 
         $this->publishes([
-            __DIR__.'/views'        => base_path('resources/views/dsampaolo/laravel-blog'),
+            __DIR__.'/views'        => base_path('resources/views/vendor/blog'),
             __DIR__.'/migrations'   => $this->app->databasePath().'/migrations',
         ]);
     }
@@ -29,6 +29,7 @@ class BlogServiceProvider extends ServiceProvider {
         include __DIR__.'/routes.php';
         $this->app->make('DSampaolo\Blog\BlogController');
         $this->app->make('DSampaolo\Blog\BlogAdminController');
+        $this->app->make('DSampaolo\Blog\BlogPostController');
 	}
 
 }
