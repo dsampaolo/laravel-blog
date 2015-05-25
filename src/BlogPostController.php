@@ -27,12 +27,12 @@ class BlogPostController extends Controller {
     }
 
     public function create() {
-        return view('blog_admin::post.create')
+        return view('blog::admin.post.create')
             ->withPostId('');
     }
 
     public function edit($id) {
-        return view('blog_admin::post.create')
+        return view('blog::admin.post.create')
             ->withPostId($id);
     }
 

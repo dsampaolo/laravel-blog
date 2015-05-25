@@ -12,7 +12,6 @@ class BlogServiceProvider extends ServiceProvider {
 	public function boot()
 	{
         $this->loadViewsFrom(__DIR__.'/Views',       'blog');
-        $this->loadViewsFrom(__DIR__.'/Views/admin', 'blog_admin');
 
         $this->publishes([
             __DIR__.'/Views'        => base_path('resources/views/dsampaolo/blog'),
