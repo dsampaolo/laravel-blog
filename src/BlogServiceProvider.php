@@ -14,8 +14,8 @@ class BlogServiceProvider extends ServiceProvider {
         $this->loadViewsFrom(__DIR__.'/Views',       'blog');
 
         $this->publishes([
-            __DIR__.'/Views'        => base_path('resources/views/dsampaolo/blog'),
-            __DIR__.'/Migrations'   => $this->app->databasePath().'/migrations',
+            __DIR__.'/views'        => base_path('resources/views/dsampaolo/laravel-blog'),
+            __DIR__.'/migrations'   => $this->app->databasePath().'/migrations',
         ]);
     }
 
