@@ -1,4 +1,4 @@
-@extends('blog_admin::layout')
+@extends('blog::admin.layout')
 
 @section('content')
 

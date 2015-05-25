@@ -1,4 +1,4 @@
-@extends('blog_admin::layout')
+@extends('blog::admin.layout')
 
 @section('content')
 
@@ -58,16 +58,6 @@
 
     @endforeach
     </table>
-    <button class="btn btn-success">Create post</button>
-
-@endsection
-
-@section('footer-scripts')
-
-    <script>
-    $().ready(function() {
-        console.log('ok');
-    });
-    </script>
+    <a href="{{ action('\DSampaolo\Blog\BlogPostController@create') }}" class="btn btn-success">Create post</a>
 
 @endsection
