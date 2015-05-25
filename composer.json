@@ -1,0 +1,21 @@
+{
+    "name": "dsampaolo/laravel-blog",
+    "description": "Provides blog capabilities to your Laravel installation. /!\\ Early pre-stable version",
+    "keywords": ["laravel","blog"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Didier Sampaolo",
+            "email": "didier@didcode.com",
+            "homepage": "http://www.didcode.com/",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "classmap": [
+            "src/Models"
+        ]
+    }
+}
