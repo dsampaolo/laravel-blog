@@ -7,15 +7,6 @@ use DSampaolo\Blog\Models\Post;
 
 class BlogController extends Controller {
 
-    function __construct() {
-
-        include_once('Models/Category.php');
-        include_once('Models/Option.php');
-        include_once('Models/Post.php');
-
-        parent::__construct();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +21,7 @@ class BlogController extends Controller {
     }
 
     public function show($slug) {
-        $post = Post::whereSlug($slug)->first();
+        $post = Post::isPublished()->whereSlug($slug)->first();
 
         return view('blog::post.show')
             ->withPost($post)
@@ -38,13 +29,13 @@ class BlogController extends Controller {
     }
 
     public function showPost($slug) {
-        $post = Post::whereSlug($slug)->first();
+        $post = Post::isPublished()->whereSlug($slug)->first();
 
         return view('blog::post.show')->withPost($post);
     }
 
     public function rss() {
-        $posts = Post::orderBy('created_at', 'desc')->take(10)->get();
+        $posts = Post::isPublished()->orderBy('created_at', 'desc')->take(10)->get();
         $last_build_date = \DateTime::createFromFormat('Y-m-d H:i:s', Post::max('created_at'))->format('D, d M Y H:i:s O');
 
         $content = view('blog::rss')

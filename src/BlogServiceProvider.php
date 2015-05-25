@@ -28,8 +28,7 @@ class BlogServiceProvider extends ServiceProvider {
 	{
         include __DIR__.'/routes.php';
         $this->app->make('DSampaolo\Blog\BlogController');
-        $this->app->make('DSampaolo\Blog\BlogAdminController');
-        $this->app->make('DSampaolo\Blog\BlogPostController');
+        $this->app->make('DSampaolo\Blog\AdminController');
 	}
 
 }

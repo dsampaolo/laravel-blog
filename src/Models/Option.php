@@ -4,13 +4,19 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Option extends Eloquent {
     protected $table = 'dsampaolo_blog_options';
+    protected $fillable = ['name', 'value'];
 
     static public function get($name) {
-        return self::whereName($name)->first()->value;
+        $option = self::whereName($name)->first();
+        if (isset($option->value)) {
+            return $option->value;
+        }
+
+        // default values
+        if ($name == "rss_number") {
+            return 10;
+        }
+
+        return null;
     }
-
-//    static public function set($name, $value) {
-//
-//    }
-
 }

@@ -124,8 +124,6 @@
 
             }, 'json');
         });
-
-
     });
 </script>
 @endsection
