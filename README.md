@@ -1,4 +1,12 @@
-# laravel-blog
+# dsampaolo/laravel-blog
+
+
+## Description
+
+A Laravel 5 package to add a simple blog to an existing Laravel 5 site.
+
+
+## Installation
 
 Update your composer.json 
 
