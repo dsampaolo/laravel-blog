@@ -42,7 +42,7 @@ class BlogAdminController extends Controller {
     }
 
     public function rss() {
-        $posts = Post::orderBy('created_at', 'desc')->take(10)->get();
+        $posts = Post::isPublished()->orderBy('created_at', 'desc')->take(10)->get();
         $last_build_date = \DateTime::createFromFormat('Y-m-d H:i:s', Post::max('created_at'))->format('D, d M Y H:i:s O');
 
         $content = view('blog::rss')
