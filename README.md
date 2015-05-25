@@ -1,6 +1,6 @@
 # laravel-blog
 
-Update your composer.json :
+Update your composer.json 
 
 ```
 "repositories": [
@@ -12,8 +12,17 @@ Update your composer.json :
 "require": {
     "dsampaolo/laravel-blog": "dev-master"
 }
+"autoload": {
+    "psr-4": {
+        "DSampaolo\\Blog\\": "vendor/dsampaolo/laravel-blog/src"
+    }
+}
 ```
 
+Then refresh autoload paths by running  
+``` 
+composer dump-autoload
+``` 
 
 Publish the configuration of the package :
 
@@ -33,3 +42,14 @@ providers' => [
     'DSampaolo\Blog\BlogServiceProvider',
 ]
 ```
+
+Customize your views in 
+``` 
+resources/views/dsampaolo/blog
+``` 
+
+You can add/edit posts :
+```
+/admin/blog/
+```
+
