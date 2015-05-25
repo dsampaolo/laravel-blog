@@ -5,18 +5,16 @@
 
 A Laravel 5 package to add a simple blog to an existing Laravel 5 site.
 
+## Packagist
+
+Packagist name : dsampaolo/laravel-blog
+
 
 ## Installation
 
 Update your composer.json 
 
 ```
-"repositories": [
-    {
-        "url": "https://github.com/dsampaolo/laravel-blog.git",
-        "type": "git"
-    }
-],
 "require": {
     "dsampaolo/laravel-blog": "dev-master"
 }
