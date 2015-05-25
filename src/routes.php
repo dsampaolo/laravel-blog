@@ -5,6 +5,7 @@ Route::group(['prefix' => 'admin'], function()
     Route::get('blog', 'DSampaolo\Blog\BlogAdminController@index');
     Route::post('blog/save_post', 'DSampaolo\Blog\BlogPostController@ajax_save');
     Route::post('blog/load_post', 'DSampaolo\Blog\BlogPostController@ajax_load');
+    Route::post('blog/publish_post', 'DSampaolo\Blog\BlogPostController@ajax_publish');
 
     Route::resource('post', 'DSampaolo\Blog\BlogPostController');
 });

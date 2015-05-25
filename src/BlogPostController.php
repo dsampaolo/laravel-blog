@@ -16,16 +16,6 @@ class BlogPostController extends Controller {
         parent::__construct();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-
-    }
-
     public function create() {
         return view('blog::admin.post.create')
             ->withPostId('');
@@ -36,20 +26,15 @@ class BlogPostController extends Controller {
             ->withPostId($id);
     }
 
-    public function store() {
-
-    }
-
-    public function update() {
-
-    }
-
-    public function show($id) {
-    }
-
     public function ajax_save() {
 
         $fields = array_except(\Input::all(), ['_token', 'post_id' ]);
+
+        if (strlen($fields['slug']) === 0) {
+            $fields['slug'] = \Str::slug($fields['title']);
+        } else {
+            $fields['slug'] = \Str::slug($fields['slug']);
+        }
 
         if (\Input::get('post_id') > 0) {
             $post = Post::find(\Input::get('post_id'));
@@ -62,9 +47,21 @@ class BlogPostController extends Controller {
     }
 
     public function ajax_load() {
-        $post_id = \Input::get('id');
+        $post_id = \Input::get('post_id');
 
         $post = Post::find($post_id);
+        return response()->json($post);
+    }
+
+    public function ajax_publish() {
+        $post_id = \Input::get('post_id');
+
+        $post = Post::find($post_id);
+        if ($post->published_at === '0000-00-00 00:00:00') {
+            $post->published_at = \DB::raw('now()');
+            $post->save();
+        }
+
         return response()->json($post);
     }
 }

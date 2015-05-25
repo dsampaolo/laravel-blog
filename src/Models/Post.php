@@ -19,4 +19,8 @@ class Post extends Eloquent {
         return $query->where('published_at', '>', \DB::raw('now()'));
     }
 
+    function is_published() {
+        return ($this->published_at !== '0000-00-00 00:00:00');
+    }
+
 }

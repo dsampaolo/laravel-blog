@@ -52,12 +52,58 @@
             <td>{{ $post->title }}</td>
             <td>
                 <a href="{{ action('\DSampaolo\Blog\BlogPostController@edit', $post->id) }}" class="btn btn-primary">Edit</a>
-                <button class="btn btn-danger">Delete</button>
+                @if (!$post->is_published() )
+                    <button data-id="{{$post->id}}" class="btn btn-publish btn-success">Publish</button>
+                @endif
+                {{--<button class="btn btn-danger">Delete</button>--}}
             </td>
         </tr>
 
     @endforeach
     </table>
     <a href="{{ action('\DSampaolo\Blog\BlogPostController@create') }}" class="btn btn-success">Create post</a>
+
+@endsection
+
+
+@section('footer-scripts')
+    <script>
+    $().ready(function() {
+        $('.btn-publish').click(function(e) {
+            e.preventDefault();
+            $(this).addClass('disabled');
+
+            var post_id = $(this).data('id');
+            var btn = $(this);
+
+            $.post('/admin/blog/publish_post', {
+
+                _token: "{{ csrf_token() }}",
+                post_id: post_id
+
+            }, function(data) {
+                $(btn).removeClass('disabled');
+            }, 'json');
+        });
+
+        // publishing
+        $('#btn_publish_post').click(function(e) {
+            e.preventDefault();
+
+            $(this).addClass('disabled');
+
+            $.post('/admin/blog/publish_post', {
+                _token: "{{ csrf_token() }}",
+
+                post_id: $('#post_id').val()
+            }, function(data) {
+
+                $('#btn_publish_post').removeClass('disabled');
+
+            }, 'json');
+        });
+
+    });
+    </script>
 
 @endsection

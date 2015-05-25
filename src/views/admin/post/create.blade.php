@@ -12,7 +12,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="title">Title</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="title" value="{{ Input::old('title') }}">
+                <input type="text" class="form-control" id="title">
             </div>
         </div>
 
@@ -48,6 +48,10 @@
 
         <button id="btn_save_post" type="submit" class="col-md-offset-2 btn btn-primary">Save post</button>
 
+        @if ($post_id > 0)
+            <button id="btn_publish_post" type="submit" class="btn btn-success">Publish post</button>
+        @endif
+
     </form>
 
 @endsection
@@ -55,6 +59,15 @@
 @section('footer-scripts')
 
 <script>
+
+    function showPost(data) {
+        $('#title').val(data.title);
+        $('#slug').val(data.slug);
+        $('#chapo').val(data.chapo);
+        $('#content').val(data.content);
+        $('#published_at').val(data.published_at);
+    }
+
     $().ready(function() {
 
         // loading
@@ -62,15 +75,10 @@
         if (post_id > 0) {
             $.post('/admin/blog/load_post', {
                 _token: "{{ csrf_token() }}",
-                id: post_id
-            }, function(data) {
-                console.log('appel ajax ok, loaded data');
 
-                $('#title').val(data.title);
-                $('#slug').val(data.slug);
-                $('#chapo').val(data.chapo);
-                $('#content').val(data.content);
-                $('#published_at').val(data.published_at);
+                post_id: post_id
+            }, function(data) {
+                showPost(data);
 
             }, 'json');
         }
@@ -95,8 +103,29 @@
 
                 $('#btn_save_post').removeClass('disabled');
                 $('#post_id').val(data.id);
+
+                showPost(data);
             }, 'json');
         });
+
+        // publishing
+        $('#btn_publish_post').click(function(e) {
+            e.preventDefault();
+
+            $(this).addClass('disabled');
+
+            $.post('/admin/blog/publish_post', {
+                _token: "{{ csrf_token() }}",
+
+                post_id: $('#post_id').val()
+            }, function(data) {
+
+                $('#btn_publish_post').removeClass('disabled');
+
+            }, 'json');
+        });
+
+
     });
 </script>
 @endsection

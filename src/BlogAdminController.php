@@ -22,24 +22,23 @@ class BlogAdminController extends Controller {
      */
     public function index()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::orderBy('created_at','desc')->paginate(10);
         return view('blog::admin.index')
-            ->withPosts($posts)
-            ->withTitle('Magazine : on décrypte les tendances');
+            ->withPosts($posts);
     }
 
     public function show($slug) {
         $post = Post::whereSlug($slug)->first();
 
         return view('blog::post.show')
-            ->withPost($post)
-            ->withTitle($post->title.' - Magazine');
+            ->withPost($post);
     }
 
     public function showPost($slug) {
         $post = Post::whereSlug($slug)->first();
 
-        return view('blog::post.show')->withPost($post);
+        return view('blog::post.show')
+            ->withPost($post);
     }
 
     public function rss() {
