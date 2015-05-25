@@ -23,7 +23,7 @@ class BlogAdminController extends Controller {
     public function index()
     {
         $posts = Post::paginate(10);
-        return view('blog_admin::index')
+        return view('blog::admin.index')
             ->withPosts($posts)
             ->withTitle('Magazine : on décrypte les tendances');
     }
