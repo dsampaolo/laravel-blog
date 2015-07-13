@@ -9,7 +9,7 @@ class AdminController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -73,8 +73,7 @@ class AdminController extends Controller {
         $post->image = $file->getClientOriginalName();
         $post->save();
 
-        return;
-
+        return redirect('/admin/blog/');
     }
 
 
