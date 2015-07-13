@@ -36,6 +36,7 @@ class BlogController extends Controller {
         $post = Post::isPublished()->whereSlug($slug)->first();
         $categories = Category::all();
         return view('blog::post.show')
+            ->withPageTitle($post->title)
             ->withPost($post)
             ->withCategories($categories);
     }
@@ -58,6 +59,7 @@ class BlogController extends Controller {
         $posts = Post::where('category_id', $category->id)->paginate(10);
 
         return view('blog::category.show')
+            ->withPageTitle($category->name)
             ->withPosts($posts)
             ->withCategory($category)
             ->withCategories($categories);
