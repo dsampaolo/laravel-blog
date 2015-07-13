@@ -48,7 +48,7 @@
                     $category = 0;
                 }
                 ?>
-                {!! Form::select('category_id', $categories, $category, ["class" => "form-control"] ) !!}
+                {!! Form::select('category_id', $categories, $category, ["id"=>"category_id", "class" => "form-control"] ) !!}
             </div>
         </div>
 

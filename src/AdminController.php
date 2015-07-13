@@ -73,7 +73,7 @@ class AdminController extends Controller {
         $post = Post::find($post_id);
 
         $file = \Input::file('image');
-        $img = \Image::make($file)->fit(300, 150);
+        $img = \Image::make($file)->fit(1000, 500);
 
         $filename = '/img/posts/'.$file->getClientOriginalName();
         $img->save( public_path().$filename );
@@ -83,7 +83,6 @@ class AdminController extends Controller {
 
         return redirect('/admin/blog/');
     }
-
 
     public function ajax_post_save() {
 
