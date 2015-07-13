@@ -6,6 +6,9 @@ Route::group(['prefix' => 'admin'], function()
     Route::get('post/create', 'DSampaolo\Blog\AdminController@createPost');
     Route::get('post/{id}/edit', 'DSampaolo\Blog\AdminController@editPost');
 
+    Route::post('post/{id}/image', 'DSampaolo\Blog\AdminController@addImage');
+    Route::get('post/{id}/image', 'DSampaolo\Blog\AdminController@formAddImage');
+
     Route::post('blog/save_post', 'DSampaolo\Blog\AdminController@ajax_post_save');
     Route::post('blog/load_post', 'DSampaolo\Blog\AdminController@ajax_post_load');
     Route::post('blog/publish_post', 'DSampaolo\Blog\AdminController@ajax_post_publish');
@@ -18,4 +21,5 @@ Route::group(['prefix' => 'admin'], function()
 Route::get('feed' , 'DSampaolo\Blog\BlogController@rss');
 
 Route::get('blog' , 'DSampaolo\Blog\BlogController@index');
+Route::get('blog/c-{slug}', 'DSampaolo\Blog\BlogController@showCategory');
 Route::get('blog/{slug}', 'DSampaolo\Blog\BlogController@showPost');

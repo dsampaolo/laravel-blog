@@ -8,7 +8,8 @@
         <h1 class="col-md-offset-2">Create a Post</h1>
     @endif
 
-    <form class="form-horizontal">
+
+    <form class="form-horizontal" >
         <div class="form-group">
             <label class="col-sm-2 control-label" for="title">Title</label>
             <div class="col-sm-10">
@@ -50,7 +51,10 @@
 
         @if ($post_id > 0)
             <button id="btn_publish_post" type="submit" class="btn btn-success">Publish post</button>
+            <a href="/admin/post/{{ $post_id }}/image" class="btn btn-default">Add Image</a>
         @endif
+
+
 
     </form>
 

@@ -17,6 +17,8 @@ class CreateTablesDsampaoloBlog extends Migration {
             $table->increments('id');
 
             $table->string('name');
+            $table->string('slug');
+            $table->integer('posts_num')->default(0);
 
             $table->timestamps();
         });
@@ -56,6 +58,7 @@ class CreateTablesDsampaoloBlog extends Migration {
 	public function down()
 	{
 		Schema::drop('dsampaolo_blog_posts');
+		Schema::drop('dsampaolo_blog_options');
 		Schema::drop('dsampaolo_blog_categories');
 	}
 

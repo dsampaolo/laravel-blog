@@ -7,6 +7,11 @@ use DSampaolo\Blog\Models\Option;
 
 class AdminController extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -44,6 +49,34 @@ class AdminController extends Controller {
         return view('blog::post.show')
             ->withPost($post);
     }
+
+    public function formAddImage($post_id) {
+        $post = Post::find($post_id);
+
+        return view('blog::admin.image')
+            ->withPost($post);
+    }
+
+    public function addImage($post_id) {
+        @mkdir(public_path().'/img/');
+        @mkdir(public_path().'/img/posts/');
+        @mkdir(public_path().'/img/posts/thumbs');
+
+        $post = Post::find($post_id);
+
+        $file = \Input::file('image');
+        $img = \Image::make($file)->fit(300, 150);
+
+        $filename = '/img/posts/'.$file->getClientOriginalName();
+        $img->save( public_path().$filename );
+
+        $post->image = $file->getClientOriginalName();
+        $post->save();
+
+        return;
+
+    }
+
 
     public function ajax_post_save() {
 

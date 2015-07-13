@@ -16,11 +16,19 @@ class Post extends Eloquent {
     }
 
     function scopeIsPublished($query) {
-        return $query->where('published_at', '>', \DB::raw('now()'));
+        return $query->where('published_at', '<', \DB::raw('now()'));
     }
 
     function is_published() {
         return ($this->published_at !== '0000-00-00 00:00:00');
+    }
+
+    function Category() {
+        return $this->hasOne('DSampaolo\Blog\Models\Category', 'id', 'category_id');
+    }
+
+    function getImageAttribute($value) {
+        return '/img/posts/'.$value;
     }
 
 }

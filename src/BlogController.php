@@ -14,24 +14,30 @@ class BlogController extends Controller {
      */
     public function index()
     {
+        $categories = Category::all();
         $posts = Post::isPublished()->paginate(10);
         return view('blog::index')
             ->withPosts($posts)
-            ->withTitle('Magazine : on décrypte les tendances');
+            ->withCategories($categories)
+            ->withTitle('Didier Sampaolo : le blog');
     }
 
     public function show($slug) {
         $post = Post::isPublished()->whereSlug($slug)->first();
+        $categories = Category::all();
 
         return view('blog::post.show')
             ->withPost($post)
+            ->withCategories($categories)
             ->withTitle($post->title.' - Magazine');
     }
 
     public function showPost($slug) {
         $post = Post::isPublished()->whereSlug($slug)->first();
-
-        return view('blog::post.show')->withPost($post);
+        $categories = Category::all();
+        return view('blog::post.show')
+            ->withPost($post)
+            ->withCategories($categories);
     }
 
     public function rss() {
@@ -44,5 +50,16 @@ class BlogController extends Controller {
             ->withSiteName(Option::get('site_name'));
 
         return \Response::make($content, '200')->header('Content-Type', 'text/xml');
+    }
+
+    public function showCategory($slug) {
+        $categories = Category::all();
+        $category = Category::whereSlug($slug)->first();
+        $posts = Post::where('category_id', $category->id)->paginate(10);
+
+        return view('blog::category.show')
+            ->withPosts($posts)
+            ->withCategory($category)
+            ->withCategories($categories);
     }
 }
