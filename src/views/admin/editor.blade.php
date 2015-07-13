@@ -39,6 +39,20 @@
         </div>
 
         <div class="form-group">
+            <label class="col-sm-2 control-label" for="chapo">Category</label>
+            <div class="col-sm-10">
+                <?php
+                if (isset($post)) {
+                    $category = $post->category_id;
+                }  else {
+                    $category = 0;
+                }
+                ?>
+                {!! Form::select('category_id', $categories, $category, ["class" => "form-control"] ) !!}
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="col-sm-2 control-label" for="content">Content</label>
             <div class="col-sm-10">
                 <textarea id="content" name="content" class="form-control"></textarea>
@@ -70,6 +84,7 @@
         $('#chapo').val(data.chapo);
         $('#content').val(data.content);
         $('#published_at').val(data.published_at);
+        $('#category_id').val(data.category_id);
     }
 
     $().ready(function() {
@@ -101,6 +116,7 @@
                 chapo: $('#chapo').val(),
                 content: $('#content').val(),
                 published_at: $('#published_at').val(),
+                category_id: $('#category_id').val(),
 
                 post_id: $('#post_id').val()
             }, function(data) {

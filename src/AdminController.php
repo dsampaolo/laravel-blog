@@ -27,12 +27,20 @@ class AdminController extends Controller {
     }
 
     public function createPost() {
+        $categories = Category::lists('name', 'id');
+
         return view('blog::admin.editor')
+            ->withCategories($categories)
             ->withPostId('');
     }
 
     public function editPost($id) {
+        $categories = Category::lists('name', 'id');
+        $post= Post::find($id);
+
         return view('blog::admin.editor')
+            ->withCategories($categories)
+            ->withPost($post)
             ->withPostId($id);
     }
 
