@@ -12,7 +12,10 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "illuminate/html": "5.*",
+        "intervention/image": "^2.3"
+    },
     "autoload": {
         "classmap": [
             "src/Models"
