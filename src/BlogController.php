@@ -38,7 +38,8 @@ class BlogController extends Controller {
         return view('blog::post.show')
             ->withPageTitle($post->title)
             ->withPost($post)
-            ->withCategories($categories);
+            ->withCategories($categories)
+            ->withActiveCategory($post->category->id);
     }
 
     public function rss() {
@@ -62,6 +63,7 @@ class BlogController extends Controller {
             ->withPageTitle($category->name)
             ->withPosts($posts)
             ->withCategory($category)
-            ->withCategories($categories);
+            ->withCategories($categories)
+            ->withActiveCategory($category->id);
     }
 }

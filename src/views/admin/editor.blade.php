@@ -32,13 +32,6 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="chapo">Excerpt</label>
-            <div class="col-sm-10">
-                <textarea id="chapo" name="chapo" class="form-control"></textarea>
-            </div>
-        </div>
-
-        <div class="form-group">
             <label class="col-sm-2 control-label" for="chapo">Category</label>
             <div class="col-sm-10">
                 <?php
@@ -53,9 +46,16 @@
         </div>
 
         <div class="form-group">
+            <label class="col-sm-2 control-label" for="chapo">Excerpt</label>
+            <div class="col-sm-10">
+                <textarea id="chapo" name="chapo" class="ckeditor form-control"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="col-sm-2 control-label" for="content">Content</label>
             <div class="col-sm-10">
-                <textarea id="content" name="content" class="form-control"></textarea>
+                <textarea id="content" name="content" class="ckeditor form-control"></textarea>
             </div>
         </div>
 
@@ -76,6 +76,9 @@
 
 @section('footer-scripts')
 
+    <script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.5.6/standard/adapters/jquery.js"></script>
+
 <script>
 
     function showPost(data) {
@@ -88,6 +91,8 @@
     }
 
     $().ready(function() {
+
+        $('.ckedit').ckeditor(); // if class is prefered.
 
         // loading
         var post_id = $('#post_id').val();
@@ -113,8 +118,8 @@
 
                 title: $('#title').val(),
                 slug: $('#slug').val(),
-                chapo: $('#chapo').val(),
-                content: $('#content').val(),
+                chapo: CKEDITOR.instances['chapo'].getData(),
+                content: CKEDITOR.instances['content'].getData(),
                 published_at: $('#published_at').val(),
                 category_id: $('#category_id').val(),
 

@@ -4,7 +4,7 @@
     </div>
     <div class="col-md-9">
         <h2><a href="{{$post->url}}">{{ $post->title }}</a></h2>
-        <p>{{$post->chapo}}</p>
+        <p>{!! $post->chapo !!}</p>
     </div>
 </div>
 
