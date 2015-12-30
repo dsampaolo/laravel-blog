@@ -13,6 +13,8 @@ Route::group(['prefix' => 'admin'], function()
     Route::post('blog/load_post', 'DSampaolo\Blog\AdminController@ajax_post_load');
     Route::post('blog/publish_post', 'DSampaolo\Blog\AdminController@ajax_post_publish');
 
+    Route::post('blog/create_category', 'DSampaolo\Blog\AdminController@ajax_category_create');
+
     Route::post('blog/save_options', 'DSampaolo\Blog\AdminController@ajax_options_save');
 
 //    Route::resource('post', 'DSampaolo\Blog\BlogPostController');

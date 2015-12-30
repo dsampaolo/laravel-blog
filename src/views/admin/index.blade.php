@@ -36,6 +36,32 @@
 
 
     <hr />
+
+    <h2>Categories</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Slug</th>
+            <th># of posts</th>
+            {{--<th>Actions</th>--}}
+        </tr>
+        @foreach($categories as $category)
+            <tr>
+                <td>{{ $category->id }}</td>
+                <td>{{ $category->name }}</td>
+                <td>{{ $category->slug }}</td>
+                <td>{{ $category->posts_num }}</td>
+                <td>
+{{--                    <a href="{{ action('\DSampaolo\Blog\AdminController@editCat', $category->id) }}" class="btn btn-primary">Edit</a>--}}
+                </td>
+            </tr>
+
+        @endforeach
+    </table>
+    <input type="text" id="new_cat" name="new_cat" value="" /> <button id="create_category" class="btn btn-success">Create Category</button>
+
+    <hr />
     <h2>Posts</h2>
 
     <table class="table table-bordered table-hover table-striped">
@@ -55,7 +81,6 @@
                 @if (!$post->is_published() )
                     <button data-id="{{$post->id}}" class="btn btn-publish btn-success">Publish</button>
                 @endif
-                {{--<button class="btn btn-danger">Delete</button>--}}
             </td>
         </tr>
 
@@ -80,6 +105,34 @@
             }, function(data) {
                 console.log('options saved');
             });
+        });
+
+
+        // categories
+
+        $('#create_category').click(function(e) {
+            e.preventDefault();
+            $(this).addClass('disabled');
+            var btn = $(this);
+
+            $.post('/admin/blog/create_category', {
+                _token: "{{ csrf_token() }}",
+                category_name: $('#new_cat').val()
+
+            }, function(data) {
+                $(btn).removeClass('disabled');
+
+                if (data.status == 'success') {
+                    toastr.success('Category created.');
+
+                    console.log(data.object);
+
+                    // TODO add table row
+
+                } else {
+                    toastr.error(data.error);
+                }
+            }, 'json');
         });
 
         // publishing

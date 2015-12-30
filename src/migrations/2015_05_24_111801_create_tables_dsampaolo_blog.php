@@ -45,6 +45,8 @@ class CreateTablesDsampaoloBlog extends Migration {
 
             $table->integer('category_id');
 
+            $table->enum('post_status', ['draft', 'published']);
+
             $table->dateTime('published_at');
             $table->timestamps();
         });

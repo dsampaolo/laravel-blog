@@ -4,6 +4,9 @@ use App\Http\Controllers\Controller;
 use DSampaolo\Blog\Models\Post;
 use DSampaolo\Blog\Models\Category;
 use DSampaolo\Blog\Models\Option;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller {
 
@@ -19,9 +22,11 @@ class AdminController extends Controller {
      */
     public function index()
     {
+
         $posts = Post::orderBy('created_at','desc')->paginate(10);
         return view('blog::admin.index')
             ->withPosts($posts)
+            ->withCategories(Category::all())
             ->withOptionRssName(Option::get('rss_name'))
             ->withOptionRssNumber(Option::get('rss_number'));
     }
@@ -72,7 +77,7 @@ class AdminController extends Controller {
 
         $post = Post::find($post_id);
 
-        $file = \Input::file('image');
+        $file = Input::file('image');
         $img = \Image::make($file)->fit(1000, 500);
 
         $filename = '/img/posts/'.$file->getClientOriginalName();
@@ -89,13 +94,13 @@ class AdminController extends Controller {
         $fields = array_except(\Input::all(), ['_token', 'post_id' ]);
 
         if (strlen($fields['slug']) === 0) {
-            $fields['slug'] = \Str::slug($fields['title']);
+            $fields['slug'] = Str::slug($fields['title']);
         } else {
-            $fields['slug'] = \Str::slug($fields['slug']);
+            $fields['slug'] = Str::slug($fields['slug']);
         }
 
         if (\Input::get('post_id') > 0) {
-            $post = Post::find(\Input::get('post_id'));
+            $post = Post::find(Input::get('post_id'));
             $post->update($fields);
         } else {
             $post = Post::create($fields);
@@ -104,19 +109,22 @@ class AdminController extends Controller {
         return response()->json($post);
     }
 
+
     public function ajax_post_load() {
-        $post_id = \Input::get('post_id');
+        $post_id = Input::get('post_id');
+
 
         $post = Post::find($post_id);
         return response()->json($post);
     }
 
     public function ajax_post_publish() {
-        $post_id = \Input::get('post_id');
+        $post_id = Input::get('post_id');
+
 
         $post = Post::find($post_id);
         if ($post->published_at === '0000-00-00 00:00:00') {
-            $post->published_at = \DB::raw('now()');
+            $post->published_at = DB::raw('now()');
             $post->save();
         }
 
@@ -124,7 +132,7 @@ class AdminController extends Controller {
     }
 
     public function ajax_options_save() {
-        $options = array_except(\Input::all(), '_token' );
+        $options = array_except(Input::all(), '_token' );
 
         foreach ($options as $key=>$val) {
             $option = Option::firstOrCreate( ['name' => $key]);
@@ -135,5 +143,21 @@ class AdminController extends Controller {
         }
 
         return response()->json($ret);
+    }
+
+    public function ajax_category_create() {
+        $category_name = Input::get('category_name');
+
+        if (strlen($category_name) == 0) {
+            return response()->json(['status' => 'error', 'error' => 'Categories cannot have empty names.']);
+        }
+
+        $category = Category::whereName($category_name)->first();
+        if ($category) {
+            return response()->json(['status' => 'error', 'error' => 'This category already exists.']);
+        }
+
+        $category = Category::create(['name' => $category_name, 'slug' => Str::slug($category_name)]);
+        return response()->json(['status' => 'success', 'object' => $category]);
     }
 }

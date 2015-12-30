@@ -34,13 +34,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="chapo">Category</label>
             <div class="col-sm-10">
-                <?php
-                if (isset($post)) {
-                    $category = $post->category_id;
-                }  else {
-                    $category = 0;
-                }
-                ?>
+                <?php $category = isset($post) ? $post->category_id : null; ?>
                 {!! Form::select('category_id', $categories, $category, ["id"=>"category_id", "class" => "form-control"] ) !!}
             </div>
         </div>
@@ -128,6 +122,8 @@
 
                 $('#btn_save_post').removeClass('disabled');
                 $('#post_id').val(data.id);
+
+                toastr.success('Post saved.');
 
                 showPost(data);
             }, 'json');
